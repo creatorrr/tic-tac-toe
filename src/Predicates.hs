@@ -1,8 +1,8 @@
-module Predicates ( checkFinished, checkWin, getState, validPos )  where
+module Predicates ( checkFinished, checkWin, getScore, getState, validPos )  where
 
 -- Imports
 import qualified Prelude as P
-import           Prelude ((++), (!!), map, and, or)
+import           Prelude ((++), (!!), map, and, or, quot)
 import           Foundation
 import           System.Random
 
@@ -34,3 +34,12 @@ getState player game = if lost then LOST else if won then WON else DRAW
 
 validPos :: Int -> Bool
 validPos = between 1 grid_sq
+
+getScore :: Cell -> Grid -> Int -> Int
+getScore player game depth = scoreSign * (absScore - depth)
+  where
+    score = fromEnum $ getState player game
+    absScore = abs score
+    scoreSign = if score == 0
+                  then 0
+                  else score `quot` absScore

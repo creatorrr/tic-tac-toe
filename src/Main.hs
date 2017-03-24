@@ -1,8 +1,9 @@
 module Main where
 
+
 -- Imports
 import qualified Prelude as P
-import           Prelude ((!!), (++), map, quot, and, or, zip, rem)
+import           Prelude ((!!), (++), map)
 import           Foundation
 import           System.Random
 import           Data.List (maximumBy, minimumBy)
@@ -11,32 +12,13 @@ import           Data.Function (on)
 
 -- Local imports
 import           Constants
+import           Game
 import           Predicates
 import           Types
 import           Utils
 
 
--- Game functions
-play :: Grid -> Int -> Grid
-play game pos = if exists
-               then error "Invalid move"
-               else (take i game) ++ [nextTurn game] ++ (drop pos game)
-  where
-    i = pos - 1
-    existing = game !! i
-    exists = existing /= NULL
-
-
 -- AI functions
-getScore :: Cell -> Grid -> Int -> Int
-getScore player game depth = scoreSign * (absScore - depth)
-  where
-    score = fromEnum $ getState player game
-    absScore = abs score
-    scoreSign = if score == 0
-                  then 0
-                  else score `quot` absScore
-
 maxMove :: [Move] -> Move
 maxMove = maximumBy (compare `on` P.snd)
 
