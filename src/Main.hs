@@ -2,72 +2,17 @@ module Main where
 
 -- Imports
 import qualified Prelude as P
-import           Prelude ((!!), (++), map, or, quot, and, or, zip, rem)
+import           Prelude ((!!), (++), map, quot, and, or, zip, rem)
 import           Foundation
 import           System.Random
-import           Data.List (findIndex, maximumBy, minimumBy)
-import           Data.Maybe (fromJust)
+import           Data.List (maximumBy, minimumBy)
 import           Data.Function (on)
 
 
--- Types
-data State = LOST | DRAW | WON deriving (Eq, Ord, Bounded, P.Show, P.Read)
-data Cell = NULL | O | X deriving (Eq, Ord, Enum, Bounded, P.Read)
-
-instance P.Show Cell where
-    show X = "X"
-    show O = "O"
-    show NULL = "_"
-
-instance Random Cell where
-    random g = case randomR (0, 2) g of
-                 (r, g') -> (toEnum r, g')
-
-    randomR (a, b) g = case randomR (fromEnum a, fromEnum b) g of
-                 (r, g') -> (toEnum r, g')
-
-instance Enum State where
-    fromEnum s = factor * (index - pivot)
-      where
-        index = indexOf s
-
-        factor = 100
-        pivot = max `quot` 2
-        max = indexOf biggest
-        indexOf s = fromJust (findIndex (==s) ordered)
-        biggest = maxBound :: State
-        ordered = [LOST, DRAW, WON]
-
-    toEnum i
-      | i <= min = LOST
-      | i > min && i < max = DRAW
-      | otherwise = WON
-      where
-        min = fromEnum LOST
-        max = fromEnum WON
-
-type Grid = [Cell]
-
-
--- Constants
-grid_size = 3
-grid_sq = grid_size * grid_size
-
-player_cell = X
-computer_cell = O
-
-emptyGrid :: Grid
-emptyGrid = [ NULL | _ <- [1..9]]
-
-
--- Utils
-printGrid :: Grid -> [Char]
-printGrid [] = ""
-printGrid (c1:c2:c3:rest) = P.show c1 ++ "_|_" ++ P.show c2 ++ "_|_" ++ P.show c3
-                            ++ "\n" ++ printGrid rest
-
-randomGrid :: (RandomGen g) => g -> Grid
-randomGrid g = take grid_sq $ randomRs (X, O) g
+-- Local imports
+import           Constants
+import           Types
+import           Utils
 
 
 -- Game predicate functions
