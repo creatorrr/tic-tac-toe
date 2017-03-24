@@ -11,59 +11,9 @@ import           Data.Function (on)
 
 -- Local imports
 import           Constants
+import           Predicates
 import           Types
 import           Utils
-
-
--- Game predicate functions
-getLines :: Grid -> [[Cell]]
-getLines g = getCols g ++ getRows g ++ getDiags g
-  where
-    i_max = grid_size - 1
-
-    getCol i g = [ g !! (pos + i) | pos <- map (*grid_size) [0..i_max] ]
-    getRow i g = [ g !! (i*grid_size + pos) | pos <- [0..i_max] ]
-
-    getCols g = [ getCol pos g | pos <- [0..i_max] ]
-    getRows g = [ getRow pos g | pos <- [0..i_max] ]
-
-    getPrimaryDiag g = [ g !! ((*pos) . succ $ grid_size) | pos <- [0..i_max] ]
-    getSecondaryDiag g = [ g !! (pos * grid_size + i_max - pos) | pos <- [0..i_max] ]
-
-    getDiags g = getPrimaryDiag g : getSecondaryDiag g : []
-
-checkFinished :: Grid -> Bool
-checkFinished = and . map (/= NULL)
-
-checkWin :: Cell -> Grid -> Bool
-checkWin c game = or (map isComplete lines)
-  where
-    lines = getLines game
-    isComplete = and . (map (==c))
-
-getState :: Cell -> Grid -> State
-getState player game = if lost then LOST else if won then WON else DRAW
-  where
-    lost = checkWin (opponent player) game
-    won = checkWin player game
-
-    opponent X = O
-    opponent O = X
-    opponent NULL = NULL
-
-movesLeft :: Grid -> [Int]
-movesLeft = map fst . filter ((==NULL) . P.snd) . zip [1..]
-
-nextTurn :: Grid -> Cell
-nextTurn game
-  | (length . movesLeft $ game) `rem` 2 /= 0 = X
-  | otherwise = O
-
-between :: Int -> Int -> (Int -> Bool)
-between low high num = num >= low && num <= high
-
-validPos :: Int -> Bool
-validPos = between 1 grid_sq
 
 
 -- Game functions
@@ -78,10 +28,6 @@ play game pos = if exists
 
 
 -- AI functions
-type Pos = Int
-type Score = Int
-type Move = (Pos, Score)
-
 getScore :: Cell -> Grid -> Int -> Int
 getScore player game depth = scoreSign * (absScore - depth)
   where

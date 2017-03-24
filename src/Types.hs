@@ -1,4 +1,4 @@
-module Types ( State(LOST,DRAW,WON), Cell(NULL,O,X), Grid )  where
+module Types ( Pos, Score, Move, State(LOST,DRAW,WON), Cell(NULL,O,X), Grid )  where
 
 -- Imports
 import qualified Prelude as P
@@ -45,3 +45,8 @@ instance Enum State where
         max = fromEnum WON
 
 type Grid = [Cell]
+
+-- Aliases
+type Pos = Int
+type Score = Int
+type Move = (Pos, Score)
