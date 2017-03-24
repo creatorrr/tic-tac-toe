@@ -1,15 +1,20 @@
+module Main where
+
 -- Imports
-import System.Random
-import Data.List (findIndex, maximumBy, minimumBy)
-import Data.Maybe (fromJust)
-import Data.Function (on)
+import qualified Prelude as P
+import           Prelude ((!!), (++), map, or, quot, and, or, zip, rem)
+import           Foundation
+import           System.Random
+import           Data.List (findIndex, maximumBy, minimumBy)
+import           Data.Maybe (fromJust)
+import           Data.Function (on)
 
 
 -- Types
-data State = LOST | DRAW | WON deriving (Eq, Ord, Bounded, Show, Read)
-data Cell = NULL | O | X deriving (Eq, Ord, Enum, Bounded, Read)
+data State = LOST | DRAW | WON deriving (Eq, Ord, Bounded, P.Show, P.Read)
+data Cell = NULL | O | X deriving (Eq, Ord, Enum, Bounded, P.Read)
 
-instance Show Cell where
+instance P.Show Cell where
     show X = "X"
     show O = "O"
     show NULL = "_"
@@ -56,9 +61,9 @@ emptyGrid = [ NULL | _ <- [1..9]]
 
 
 -- Utils
-printGrid :: Grid -> String
+printGrid :: Grid -> [Char]
 printGrid [] = ""
-printGrid (c1:c2:c3:rest) = show c1 ++ "_|_" ++ show c2 ++ "_|_" ++ show c3
+printGrid (c1:c2:c3:rest) = P.show c1 ++ "_|_" ++ P.show c2 ++ "_|_" ++ P.show c3
                             ++ "\n" ++ printGrid rest
 
 randomGrid :: (RandomGen g) => g -> Grid
@@ -102,7 +107,7 @@ getState player game = if lost then LOST else if won then WON else DRAW
     opponent NULL = NULL
 
 movesLeft :: Grid -> [Int]
-movesLeft = map fst . filter ((==NULL) . snd) . zip [1..]
+movesLeft = map fst . filter ((==NULL) . P.snd) . zip [1..]
 
 nextTurn :: Grid -> Cell
 nextTurn game
@@ -142,10 +147,10 @@ getScore player game depth = scoreSign * (absScore - depth)
                   else score `quot` absScore
 
 maxMove :: [Move] -> Move
-maxMove = maximumBy (compare `on` snd)
+maxMove = maximumBy (compare `on` P.snd)
 
 minMove :: [Move] -> Move
-minMove = minimumBy (compare `on` snd)
+minMove = minimumBy (compare `on` P.snd)
 
 rankedMoves :: Grid -> [Move]
 rankedMoves game = map getOutcome $ movesLeft game
@@ -163,7 +168,7 @@ minimax (game, selectedPos)
 
 
 -- Attempt #2
-bestMove = maximumBy (compare `on` snd)
+bestMove = maximumBy (compare `on` P.snd)
 
 minimax' :: Grid -> Maybe Pos
 minimax' game = if validPos selectedPos
@@ -180,10 +185,11 @@ maxMove' game previous
       getOutcome pos = minMove' (play game pos) pos
 
 minMove' :: Grid -> Pos -> Move
-minMove' game previous = (previous, snd . bestMove . (map getOutcome) . movesLeft $ game)
+minMove' game previous = (previous, P.snd . bestMove . (map getOutcome) . movesLeft $ game)
   where
     getOutcome pos = maxMove' (play game pos) pos
 
 
 -- Main
-main = putStrLn .getOutcome pos = minMove' (play game pos) pos printGrid $ emptyGrid
+main :: IO ()
+main = putStrLn "Unimplemented"
