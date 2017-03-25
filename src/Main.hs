@@ -6,6 +6,7 @@ import Foundation
 
 
 -- Local imports
+import AI
 import Constants
 import Game
 import Predicates
