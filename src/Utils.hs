@@ -1,4 +1,4 @@
-module Utils ( between, printGrid, randomGrid, getLines, movesLeft, nextTurn )  where
+module Utils ( between, printGrid, randomGrid, getLines, movesLeft, nextTurn, previousTurn )  where
 
 -- Imports
 import qualified Prelude as P
@@ -31,6 +31,18 @@ nextTurn :: Grid -> Cell
 nextTurn game
   | (length . movesLeft $ game) `rem` 2 /= 0 = X
   | otherwise = O
+
+previousTurn :: Grid -> Grid -> Maybe Pos
+previousTurn game newGame = if n_diff == 1
+  then Just move
+  else Nothing where
+
+    diff@( move:_ ) = map fst' . filter (uncurry (/=) . toPair) $ zipped
+
+    zipped = P.zip3 [1..] game newGame
+    n_diff = length diff
+    toPair = \(a, b, c) -> (b, c)
+    fst' = \(a, _, _) -> a
 
 getLines :: Grid -> [[Cell]]
 getLines g = getCols g ++ getRows g ++ getDiags g
