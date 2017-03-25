@@ -1,4 +1,4 @@
-module Types ( Pos, Score, Move, State(LOST,DRAW,WON), Cell(NULL,O,X), Grid )  where
+module Types ( Depth, Pos, Score, Move, State(LOST,DRAW,WON), Cell(NULL,O,X), Grid )  where
 
 -- Imports
 import qualified Prelude as P
@@ -49,4 +49,5 @@ type Grid = [Cell]
 -- Aliases
 type Pos = Int
 type Score = Int
-type Move = (Pos, Score)
+type Depth = Int
+type Move = (Pos, Grid, Maybe Score)
