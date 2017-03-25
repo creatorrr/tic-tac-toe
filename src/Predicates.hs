@@ -35,8 +35,11 @@ getState player game = if lost then LOST else if won then WON else DRAW
 validPos :: Int -> Bool
 validPos = between 1 grid_sq
 
-getScore :: Cell -> Grid -> Int -> Int
-getScore player game depth = scoreSign * (absScore - depth)
+getScore :: Cell -> Depth -> Grid -> Maybe Score
+getScore player depth game = case checkFinished game of
+  True -> Just $ scoreSign * (absScore - depth)
+  _ -> Nothing
+  
   where
     score = fromEnum $ getState player game
     absScore = abs score
