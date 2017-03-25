@@ -19,4 +19,6 @@ executable tic-tac-toe
                      , OverloadedStrings
   build-depends:       base >= 4.7 && < 5
                      , foundation
+                     , tuple
+                     , OneTuple
                      , random
