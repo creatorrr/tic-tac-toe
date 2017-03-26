@@ -21,13 +21,24 @@ checkWin c game = or (map isComplete lines)
     lines = getLines game
     isComplete = and . (map (==c))
 
+getState :: Cell -> Grid -> State
+getState player game = if lost then LOST else if won then WON else DRAW
+  where
+    lost = checkWin (opponent player) game
+    won = checkWin player game
+
+    opponent X = O
+    opponent O = X
+    opponent NULL = NULL
+
 validPos :: Int -> Bool
 validPos = between 1 grid_sq
 
 getScore :: Depth -> Grid -> Maybe Score
 getScore depth game = case checkFinished game of
-  True -> Just $ score - depth
+  True -> Just $ score - fudge
   _ -> Nothing
   
   where
-    score = fromEnum $ checkWin computer_cell game
+    fudge = depth * P.signum score
+    score = fromEnum . getState computer_cell $ game

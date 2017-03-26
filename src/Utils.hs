@@ -1,4 +1,4 @@
-module Utils ( between, printGrid, randomGrid, getLines, movesLeft, nextTurn, previousTurn )  where
+module Utils ( between, printGrid, randomGrid, getLines, posLeft, nextTurn, previousTurn )  where
 
 -- Imports
 import qualified Prelude as P
@@ -24,12 +24,12 @@ randomGrid g = take grid_sq $ randomRs (X, O) g
 between :: Int -> Int -> (Int -> Bool)
 between low high num = num >= low && num <= high
 
-movesLeft :: Grid -> [Int]
-movesLeft = map fst . filter ((==NULL) . P.snd) . zip [1..]
+posLeft :: Grid -> [Int]
+posLeft = map fst . filter ((==NULL) . P.snd) . zip [1..]
 
 nextTurn :: Grid -> Cell
 nextTurn game
-  | (length . movesLeft $ game) `rem` 2 /= 0 = X
+  | (length . posLeft $ game) `rem` 2 /= 0 = X
   | otherwise = O
 
 previousTurn :: Grid -> Grid -> Maybe Pos
