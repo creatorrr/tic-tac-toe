@@ -16,4 +16,4 @@ import Utils
 
 -- Main
 main :: IO ()
-main = putStrLn "Unimplemented"
+main = putStrLn . show . minimax $ play emptyGrid 1
