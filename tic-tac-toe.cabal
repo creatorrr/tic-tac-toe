@@ -22,4 +22,16 @@ executable tic-tac-toe
                      , tuple
                      , OneTuple
                      , random
+
+test-suite tic-tac-toe-test
+  type:                exitcode-stdio-1.0
+  hs-source-dirs:      test
+                     , src
+  main-is:             Spec.hs
+
+  build-depends:       base >= 4.7 && < 5
+                     , foundation
+                     , tuple
+                     , OneTuple
+                     , random
                      , hspec
