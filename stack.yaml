@@ -52,6 +52,7 @@ extra-deps:
 - random-1.1
 - tuple-0.3.0.2
 - OneTuple-0.2.1
+- hspec-2.4.2
 
 # Override default flag values for local packages and extra-deps
 flags: {}
