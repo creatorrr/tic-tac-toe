@@ -7,7 +7,7 @@ module Constants
   ) where
 
 -- Imports
-import Prelude
+import Foundation
 
 -- Local imports
 import Types

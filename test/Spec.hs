@@ -2,6 +2,7 @@ module Main
   ( main
   ) where
 
+import Prelude
 import Test.Hspec
 
 import qualified ConstantsSpec as Constants

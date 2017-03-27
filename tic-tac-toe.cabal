@@ -29,6 +29,8 @@ test-suite tic-tac-toe-test
                      , src
   main-is:             Spec.hs
 
+  default-extensions:  NoImplicitPrelude
+                     , OverloadedStrings
   build-depends:       base >= 4.7 && < 5
                      , foundation
                      , tuple
