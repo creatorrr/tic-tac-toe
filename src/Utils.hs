@@ -18,8 +18,6 @@ import System.Random
 import Test.QuickCheck (arbitrary, sized, Gen, Arbitrary)
 
 import Constants
-
--- Local imports
 import Types
 
 -- Utils
