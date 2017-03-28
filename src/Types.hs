@@ -11,9 +11,11 @@ module Types
 import Data.List (findIndex)
 import Data.Maybe (fromJust)
 import Foundation
+
 -- Imports
 import qualified Prelude as P
 import System.Random
+import Test.QuickCheck
 
 -- Types
 data State
@@ -59,6 +61,9 @@ instance Enum State where
       max = fromEnum WON
 
 type Grid = [Cell]
+
+instance Arbitrary Cell where
+  arbitrary = choose (NULL, X)
 
 -- Aliases
 type Pos = Int
