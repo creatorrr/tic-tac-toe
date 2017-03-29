@@ -1,9 +1,13 @@
 module Utils
   ( arbitraryGrid
   , between
+  , decc
   , printGrid
   , randomGrid
   , getLines
+  , getRows
+  , getCols
+  , getDiags
   , posLeft
   , nextTurn
   , previousTurn
@@ -38,6 +42,9 @@ arbitraryGrid = sized $ \_ -> sequence [arbitrary | _ <- [1 .. grid_sq]]
 between :: Int -> Int -> (Int -> Bool)
 between low high num = num >= low && num <= high
 
+decc :: Int -> Int
+decc n = n - 1
+
 posLeft :: Grid -> [Int]
 posLeft = map fst . filter ((== NULL) . P.snd) . zip [1 ..]
 
@@ -58,15 +65,25 @@ previousTurn game newGame =
     toPair = \(a, b, c) -> (b, c)
     fst' = \(a, _, _) -> a
 
-getLines :: Grid -> [[Cell]]
-getLines g = getCols g ++ getRows g ++ getDiags g
+i_max :: Pos
+i_max = grid_size - 1
+
+getCols :: Grid -> [[Cell]]
+getCols g = [getCol pos g | pos <- [0 .. i_max]]
   where
-    i_max = grid_size - 1
     getCol i g = [g !! (pos + i) | pos <- map (* grid_size) [0 .. i_max]]
+
+getRows :: Grid -> [[Cell]]
+getRows g = [getRow pos g | pos <- [0 .. i_max]]
+  where
     getRow i g = [g !! (i * grid_size + pos) | pos <- [0 .. i_max]]
-    getCols g = [getCol pos g | pos <- [0 .. i_max]]
-    getRows g = [getRow pos g | pos <- [0 .. i_max]]
+
+getDiags :: Grid -> [[Cell]]
+getDiags g = getPrimaryDiag g : getSecondaryDiag g : []
+  where
     getPrimaryDiag g = [g !! ((* pos) . succ $ grid_size) | pos <- [0 .. i_max]]
     getSecondaryDiag g =
       [g !! (pos * grid_size + i_max - pos) | pos <- [0 .. i_max]]
-    getDiags g = getPrimaryDiag g : getSecondaryDiag g : []
+
+getLines :: Grid -> [[Cell]]
+getLines g = getCols g ++ getRows g ++ getDiags g
