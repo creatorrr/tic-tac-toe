@@ -10,10 +10,6 @@ module Types
 
 import Data.List (findIndex)
 import Data.Maybe (fromJust)
-import Foundation
-
--- Imports
-import qualified Prelude as P
 import System.Random
 import Test.QuickCheck
 
@@ -22,15 +18,15 @@ data State
   = LOST
   | DRAW
   | WON
-  deriving (Eq, Ord, Bounded, P.Show, P.Read)
+  deriving (Eq, Ord, Bounded, Show, Read)
 
 data Cell
   = NULL
   | O
   | X
-  deriving (Eq, Ord, Enum, Bounded, P.Read)
+  deriving (Eq, Ord, Enum, Bounded, Read)
 
-instance P.Show Cell where
+instance Show Cell where
   show X = "X"
   show O = "O"
   show NULL = "_"

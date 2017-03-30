@@ -6,9 +6,6 @@ module Constants
   , emptyGrid
   ) where
 
--- Imports
-import Foundation
-
 -- Local imports
 import Types
 

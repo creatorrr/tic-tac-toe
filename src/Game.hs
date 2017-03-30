@@ -2,9 +2,6 @@ module Game
   ( play
   ) where
 
-import Foundation
-import Prelude ((++), (!!))
-
 -- Local imports
 import Constants
 import Predicates

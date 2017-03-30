@@ -13,11 +13,6 @@ module Utils
   , previousTurn
   ) where
 
-import Foundation
-
--- Imports
-import qualified Prelude as P
-import Prelude ((++), (!!), map, zip, rem, sequence)
 import System.Random
 import Test.QuickCheck (arbitrary, sized, Gen, Arbitrary)
 
@@ -28,8 +23,7 @@ import Types
 printGrid :: Grid -> [Char]
 printGrid [] = ""
 printGrid (c1:c2:c3:rest) =
-  P.show c1 ++
-  "_|_" ++ P.show c2 ++ "_|_" ++ P.show c3 ++ "\n" ++ printGrid rest
+  show c1 ++ "_|_" ++ show c2 ++ "_|_" ++ show c3 ++ "\n" ++ printGrid rest
 
 randomGrid
   :: (RandomGen g)
@@ -46,7 +40,7 @@ decc :: Int -> Int
 decc n = n - 1
 
 posLeft :: Grid -> [Int]
-posLeft = map fst . filter ((== NULL) . P.snd) . zip [1 ..]
+posLeft = map fst . filter ((== NULL) . snd) . zip [1 ..]
 
 nextTurn :: Grid -> Cell
 nextTurn game
@@ -60,7 +54,7 @@ previousTurn game newGame =
     else Nothing
   where
     diff@(move:_) = map fst' . filter (uncurry (/=) . toPair) $ zipped
-    zipped = P.zip3 [1 ..] game newGame
+    zipped = zip3 [1 ..] game newGame
     n_diff = length diff
     toPair = \(a, b, c) -> (b, c)
     fst' = \(a, _, _) -> a

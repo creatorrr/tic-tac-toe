@@ -5,10 +5,6 @@ module Predicates
   , validPos
   ) where
 
-import Foundation
-import Prelude (map, and, or)
-import qualified Prelude as P
-
 -- Local imports
 import Constants
 import Types
@@ -47,5 +43,5 @@ getScore depth game =
     True -> Just $ score - fudge
     _ -> Nothing
   where
-    fudge = depth * P.signum score
+    fudge = depth * signum score
     score = fromEnum . getState computer_cell $ game

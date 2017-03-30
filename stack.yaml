@@ -48,7 +48,6 @@ packages:
 # Dependency packages to be pulled from upstream that are not in the resolver
 # (e.g., acme-missiles-0.3)
 extra-deps:
-- foundation-0.0.4
 - random-1.1
 - tuple-0.3.0.2
 - OneTuple-0.2.1

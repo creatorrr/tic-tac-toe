@@ -1,8 +1,5 @@
 module Main where
 
--- Imports
-import Foundation
-
 -- Local imports
 import AI
 import Constants
