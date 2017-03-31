@@ -1,9 +1,10 @@
 module TestUtils
   ( arbitraryGrid
-  , gridGen
+  , genArbitraryGridBy
   ) where
 
-import Test.QuickCheck (choose, arbitrary, sized, Gen, Arbitrary)
+import Test.QuickCheck
+       (choose, generate, arbitrary, sized, Gen, Arbitrary)
 
 import Constants
 import Game
@@ -15,9 +16,13 @@ instance Arbitrary Cell where
 -- Utils
 arbitraryGrid :: Gen [Cell]
 arbitraryGrid = sized . squash grid_sq $ gridGen
-  -- gridGen 0 = return emptyGrid
-  -- gridGen n = play n `fmap` gridGen . decc $ n
   where
+    gridGen 0 = return emptyGrid
+    gridGen n = (flip play $ n) <$> gridGen (n - 1)
     squash n f = f . (flip rem $ n)
 
-gridGen _ = sequence [arbitrary | _ <- [1 .. grid_sq]]
+genArbitraryGridBy pred = do
+  g <- generate arbitraryGrid
+  if pred g
+    then return g
+    else genArbitraryGridBy pred

@@ -5,6 +5,8 @@ module Main
 import Prelude
 import Test.Hspec
 
+import Examples
+
 import qualified ConstantsSpec as Constants
 import qualified TypesSpec as Types
 import qualified UtilsSpec as Utils

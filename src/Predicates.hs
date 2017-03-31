@@ -2,6 +2,7 @@ module Predicates
   ( checkFinished
   , checkWin
   , getScore
+  , getState
   , validPos
   ) where
 
