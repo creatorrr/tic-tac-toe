@@ -1,6 +1,5 @@
 module Utils
-  ( arbitraryGrid
-  , between
+  ( between
   , decc
   , printGrid
   , randomGrid
@@ -14,7 +13,6 @@ module Utils
   ) where
 
 import System.Random
-import Test.QuickCheck (arbitrary, sized, Gen, Arbitrary)
 
 import Constants
 import Types
@@ -29,9 +27,6 @@ randomGrid
   :: (RandomGen g)
   => g -> Grid
 randomGrid g = take grid_sq $ randomRs (NULL, X) g
-
-arbitraryGrid :: Gen [Cell]
-arbitraryGrid = sized $ \_ -> sequence [arbitrary | _ <- [1 .. grid_sq]]
 
 between :: Int -> Int -> (Int -> Bool)
 between low high num = num >= low && num <= high
