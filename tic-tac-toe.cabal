@@ -20,6 +20,8 @@ executable tic-tac-toe
                      , tuple
                      , OneTuple
                      , random
+                     , QuickCheck
+                     , extra
 
 test-suite tic-tac-toe-test
   type:                exitcode-stdio-1.0
