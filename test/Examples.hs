@@ -1,6 +1,5 @@
 module Examples where
 
-import Control.Arrow ((&&&))
 import Test.QuickCheck
 
 import TestUtils
@@ -20,6 +19,8 @@ computerWon = [NULL, X, X, O, O, O, NULL, X, NULL]
 
 playerWon = [NULL, O, O, X, X, X, NULL, NULL, NULL, NULL]
 
+drawGame = [X, X, O, O, O, X, X, O, X]
+
 genSideGame = startGameFrom sidePoss
 
 genCornerGame = startGameFrom cornerPoss
@@ -30,7 +31,8 @@ genComputerWon = genArbitraryGridBy $ checkWin computer_cell
 
 genPlayerWon = genArbitraryGridBy $ checkWin player_cell
 
+genFinished = genArbitraryGridBy checkFinished
+
 genDrawn = genArbitraryGridBy checkDrawn
   where
-    checkDrawn =
-      uncurry (&&) . (checkFinished &&& (== DRAW) . getState player_cell)
+    checkDrawn = (== DRAW) . getState player_cell

@@ -1,6 +1,5 @@
 module ConstantsSpec where
 
-import Prelude
 import Test.Hspec
 
 import Constants

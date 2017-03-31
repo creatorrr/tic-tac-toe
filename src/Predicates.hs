@@ -1,5 +1,6 @@
 module Predicates
   ( checkFinished
+  , checkFull
   , checkWin
   , getScore
   , getState
@@ -12,8 +13,11 @@ import Types
 import Utils
 
 -- Game predicate functions
+checkFull :: Grid -> Bool
+checkFull = notElem NULL
+
 checkFinished :: Grid -> Bool
-checkFinished = and . map (/= NULL)
+checkFinished = (/= INCOMPLETE) . getState computer_cell
 
 checkWin :: Cell -> Grid -> Bool
 checkWin c game = or (map isComplete lines)
@@ -22,18 +26,17 @@ checkWin c game = or (map isComplete lines)
     isComplete = and . (map (== c))
 
 getState :: Cell -> Grid -> State
-getState player game =
-  if lost
-    then LOST
-    else if won
-           then WON
-           else DRAW
+getState player game
+  | lost = LOST
+  | won = WON
+  | full = DRAW
+  | otherwise = INCOMPLETE
   where
     lost = checkWin (opponent player) game
     won = checkWin player game
+    full = checkFull game
     opponent X = O
     opponent O = X
-    opponent NULL = NULL
 
 validPos :: Int -> Bool
 validPos = between 1 grid_sq

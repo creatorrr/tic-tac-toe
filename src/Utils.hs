@@ -26,7 +26,7 @@ printGrid (c1:c2:c3:rest) =
 randomGrid
   :: (RandomGen g)
   => g -> Grid
-randomGrid g = take grid_sq $ randomRs (NULL, X) g
+randomGrid g = take grid_sq $ randomRs (O, X) g
 
 between :: Int -> Int -> (Int -> Bool)
 between low high num = num >= low && num <= high

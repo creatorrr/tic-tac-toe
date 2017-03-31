@@ -1,6 +1,5 @@
 module UtilsSpec where
 
-import Prelude
 import Test.Hspec
 import Test.Hspec.QuickCheck
 import Test.QuickCheck

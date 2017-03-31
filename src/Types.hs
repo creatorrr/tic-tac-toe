@@ -3,8 +3,8 @@ module Types
   , Pos
   , Score
   , Move
-  , State(LOST, DRAW, WON)
-  , Cell(NULL, O, X)
+  , State(..)
+  , Cell(..)
   , Grid
   ) where
 
@@ -17,6 +17,7 @@ data State
   = LOST
   | DRAW
   | WON
+  | INCOMPLETE
   deriving (Eq, Ord, Bounded, Show, Read)
 
 data Cell
