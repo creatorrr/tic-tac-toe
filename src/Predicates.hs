@@ -1,5 +1,6 @@
 module Predicates
   ( checkFinished
+  , checkEmpty
   , checkFull
   , checkWin
   , getScore
@@ -15,6 +16,9 @@ import Utils
 -- Game predicate functions
 checkFull :: Grid -> Bool
 checkFull = notElem NULL
+
+checkEmpty :: Grid -> Bool
+checkEmpty = (== emptyGrid)
 
 checkFinished :: Grid -> Bool
 checkFinished = (/= INCOMPLETE) . getState computer_cell

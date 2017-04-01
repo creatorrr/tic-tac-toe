@@ -9,8 +9,6 @@ module AI
 import Data.Function (on)
 import Data.List (repeat, maximumBy, minimumBy)
 import Data.Tuple.Select
-import Foundation
-import Prelude ((++), (!!), map, and, zip3, zipWith, concat)
 
 -- Local imports
 import Constants
@@ -21,7 +19,10 @@ import Utils
 
 -- AI functions
 allFinished :: [Grid] -> Bool
-allFinished = and . map checkFinished
+allFinished = all checkFull
+
+allScored :: [Move] -> Bool
+allScored = all ((/= Nothing) . sel3)
 
 best :: [Move] -> Move
 best = maximumBy (compare `on` sel3)
@@ -32,12 +33,11 @@ worst = minimumBy (compare `on` sel3)
 score :: Depth -> [Move] -> [Move]
 score d = map (\(p, g, _) -> (p, g, getScore d g))
 
-done' :: [Move] -> Bool
-done' = allFinished . map sel2
-
 next' :: [Move] -> [[Move]]
-next' = map (\(p, g, s) -> map (wrap p s . play g) $ posLeft g)
+next' = map expand
   where
+    expand (p, g, Nothing) = map (wrap p Nothing . play g) $ posLeft g
+    expand (p, g, s) = [(p, g, s)]
     wrap p s g' = (p, g', s)
 
 genMoves :: Grid -> [Move]
@@ -48,17 +48,17 @@ genMoves game = zip3 nextPoss nextGames (repeat Nothing)
 
 max' :: Depth -> [Move] -> Move
 max' d moves =
-  best . score d $
-  if done' moves
+  best $
+  if allScored moves
     then moves
-    else map (min' (d + 1)) $ next' moves
+    else map (min' (d + 1) . score d) . next' $ moves
 
 min' :: Depth -> [Move] -> Move
 min' d moves =
-  worst . score d $
-  if done' moves
+  worst $
+  if allScored moves
     then moves
-    else map (max' (d + 1)) $ next' moves
+    else map (max' (d + 1) . score d) . next' $ moves
 
 minimax :: Grid -> Pos
 minimax = sel1 . max' 0 . genMoves

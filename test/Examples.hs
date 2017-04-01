@@ -9,6 +9,8 @@ import Predicates
 import Types
 import Utils
 
+allPoss = [1 .. grid_sq]
+
 sidePoss = [2, 4, 6, 8]
 
 cornerPoss = [1, 3, 7, 9]
