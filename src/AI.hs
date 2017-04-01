@@ -18,11 +18,8 @@ import Types
 import Utils
 
 -- AI functions
-allFinished :: [Grid] -> Bool
-allFinished = all checkFull
-
-allScored :: [Move] -> Bool
-allScored = all ((/= Nothing) . sel3)
+allFinished :: [Move] -> Bool
+allFinished = all (checkFinished . sel2)
 
 best :: [Move] -> Move
 best = maximumBy (compare `on` sel3)
@@ -49,14 +46,14 @@ genMoves game = zip3 nextPoss nextGames (repeat Nothing)
 max' :: Depth -> [Move] -> Move
 max' d moves =
   best $
-  if allScored moves
+  if allFinished moves
     then moves
     else map (min' (d + 1) . score d) . next' $ moves
 
 min' :: Depth -> [Move] -> Move
 min' d moves =
   worst $
-  if allScored moves
+  if allFinished moves
     then moves
     else map (max' (d + 1) . score d) . next' $ moves
 

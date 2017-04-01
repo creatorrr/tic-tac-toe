@@ -19,7 +19,6 @@ spec :: Spec
 spec = do
   describe "AI" $ do
     describe "minimax" $
-      it "should win each time" $ do
-        begin <- generate $ choose (1, grid_sq)
-        let result = playSelf $ play emptyGrid begin
-        getState computer_cell result `shouldBe` WON
+      it "should never lose" $ do
+        let results = playSelf . play emptyGrid <$> [1 .. grid_sq]
+        getState computer_cell <$> results `shouldSatisfy` all (/= LOST)
