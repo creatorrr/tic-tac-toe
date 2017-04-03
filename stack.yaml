@@ -48,10 +48,8 @@ packages:
 # Dependency packages to be pulled from upstream that are not in the resolver
 # (e.g., acme-missiles-0.3)
 extra-deps:
-- random-1.1
 - hspec-2.4.2
 - QuickCheck-2.9.2
-- extra-1.5.1
 - lens-4.15.1
 - Boolean-0.2.4
 

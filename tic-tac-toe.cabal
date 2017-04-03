@@ -17,11 +17,10 @@ executable tic-tac-toe
   default-language:    Haskell2010
   default-extensions:  OverloadedStrings
   build-depends:       base >= 4.7 && < 5
-                     , random
                      , QuickCheck
-                     , extra
                      , lens
                      , Boolean
+                     , random
 
 test-suite tic-tac-toe-test
   type:                exitcode-stdio-1.0
@@ -30,9 +29,8 @@ test-suite tic-tac-toe-test
   main-is:             Spec.hs
   default-extensions:  OverloadedStrings
   build-depends:       base >= 4.7 && < 5
-                     , random
                      , hspec
                      , QuickCheck
-                     , extra
                      , lens
                      , Boolean
+                     , random

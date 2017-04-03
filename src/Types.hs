@@ -41,7 +41,7 @@ instance Boolean Cell where
     | otherwise = NULL
   _ ||* NULL = NULL
   NULL ||* _ = NULL
-  a ||* b = a
+  a ||* _ = a
 
 instance Random Cell where
   random g =
@@ -61,16 +61,16 @@ instance Enum State where
     where
       factor = 100
   toEnum i
-    | i <= min = LOST
-    | i > min && i < max = DRAW
+    | i <= min' = LOST
+    | i > min' && i < max' = DRAW
     | otherwise = WON
     where
-      min = fromEnum LOST
-      max = fromEnum WON
-
-type Grid = [Cell]
+      min' = fromEnum LOST
+      max' = fromEnum WON
 
 -- Aliases
+type Grid = [Cell]
+
 type Pos = Int
 
 type Score = Int

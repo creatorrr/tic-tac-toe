@@ -10,10 +10,6 @@ import Constants
 import Types
 import Utils
 
-pick :: [Int] -> [a] -> [a]
-pick [] _ = []
-pick (x:xs) l = (l !! x) : pick xs l
-
 spec :: Spec
 spec = do
   describe "Utils" $ do

@@ -1,6 +1,5 @@
 module PredicatesSpec where
 
-import System.Random
 import Test.Hspec
 import Test.Hspec.QuickCheck
 import Test.QuickCheck
@@ -14,12 +13,8 @@ import Types
 import Utils
 
 spec :: Spec
-spec = do
+spec =
   describe "Predicates" $ do
-    describe "checkFinished" $
-      it "should check if game finished" $ do
-        result <- checkFinished . randomGrid <$> newStdGen
-        result `shouldBe` True
     describe "checkWin" $ do
       it "should check if game won" $ do
         let playerResult = checkWin X Eg.playerWon
