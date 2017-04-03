@@ -20,7 +20,7 @@ instance Arbitrary Cell where
 
 -- Utils
 arbitraryGrid :: Gen [Cell]
-arbitraryGrid = sized . squash grid_sq $ gridGen
+arbitraryGrid = sized . squash gridSq $ gridGen
   where
     gridGen 0 = return emptyGrid
     gridGen n = (flip play $ n) <$> gridGen (n - 1)

@@ -17,7 +17,7 @@ pick (x:xs) l = (l !! x) : pick xs l
 spec :: Spec
 spec = do
   describe "Utils" $ do
-    describe "posLeft" $ modifyMaxSize (const grid_sq) $ do
+    describe "posLeft" $ modifyMaxSize (const gridSq) $ do
       it "should return non empty for grids with holes" $ property $ \x ->
         elem NULL x ==> not . null $ posLeft x
       it "should return empty for grids without holes" $ property $ \x ->

@@ -9,7 +9,7 @@ import Predicates
 import Types
 import Utils
 
-allPoss = [1 .. grid_sq]
+allPoss = [1 .. gridSq]
 
 sidePoss = [2, 4, 6, 8]
 
@@ -29,12 +29,12 @@ genCornerGame = startGameFrom cornerPoss
 
 genCenterGame = startGameFrom centerPoss
 
-genComputerWon = genArbitraryGridBy $ checkWin computer_cell
+genComputerWon = genArbitraryGridBy $ checkWin computerCell
 
-genPlayerWon = genArbitraryGridBy $ checkWin player_cell
+genPlayerWon = genArbitraryGridBy $ checkWin playerCell
 
 genFinished = genArbitraryGridBy checkFinished
 
 genDrawn = genArbitraryGridBy checkDrawn
   where
-    checkDrawn = (== DRAW) . getState player_cell
+    checkDrawn = (== DRAW) . getState playerCell

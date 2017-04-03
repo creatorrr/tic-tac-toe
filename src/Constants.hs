@@ -1,8 +1,8 @@
 module Constants
-  ( grid_size
-  , grid_sq
-  , player_cell
-  , computer_cell
+  ( gridSize
+  , gridSq
+  , playerCell
+  , computerCell
   , emptyGrid
   ) where
 
@@ -10,13 +10,17 @@ module Constants
 import Types
 
 -- Constants
-grid_size = 3 :: Int
+gridSize :: Int
+gridSize = 3
 
-grid_sq = grid_size * grid_size
+gridSq :: Int
+gridSq = gridSize * gridSize
 
-player_cell = X
+playerCell :: Cell
+playerCell = X
 
-computer_cell = O
+computerCell :: Cell
+computerCell = O
 
 emptyGrid :: Grid
 emptyGrid = [NULL | _ <- [1 .. 9]]

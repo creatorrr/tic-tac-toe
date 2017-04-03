@@ -21,7 +21,7 @@ checkEmpty :: Grid -> Bool
 checkEmpty = (== emptyGrid)
 
 checkFinished :: Grid -> Bool
-checkFinished = (/= INCOMPLETE) . getState computer_cell
+checkFinished = (/= INCOMPLETE) . getState computerCell
 
 checkWin :: Cell -> Grid -> Bool
 checkWin c game = or (map isComplete lines)
@@ -43,7 +43,7 @@ getState player game
     opponent O = X
 
 validPos :: Int -> Bool
-validPos = between 1 grid_sq
+validPos = between 1 gridSq
 
 getScore :: Depth -> Grid -> Maybe Score
 getScore depth game =
@@ -52,4 +52,4 @@ getScore depth game =
     _ -> Nothing
   where
     fudge = depth * signum score
-    score = fromEnum . getState computer_cell $ game
+    score = fromEnum . getState computerCell $ game

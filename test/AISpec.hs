@@ -20,5 +20,5 @@ spec = do
   describe "AI" $ do
     describe "minimax" $
       it "should never lose" $ do
-        let results = playSelf . play emptyGrid <$> [1 .. grid_sq]
-        getState computer_cell <$> results `shouldSatisfy` all (/= LOST)
+        let results = playSelf . play emptyGrid <$> [1 .. gridSq]
+        getState computerCell <$> results `shouldSatisfy` all (/= LOST)

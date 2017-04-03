@@ -26,7 +26,7 @@ printGrid (c1:c2:c3:rest) =
 randomGrid
   :: (RandomGen g)
   => g -> Grid
-randomGrid g = take grid_sq $ randomRs (O, X) g
+randomGrid g = take gridSq $ randomRs (O, X) g
 
 between :: Int -> Int -> (Int -> Bool)
 between low high num = num >= low && num <= high
@@ -55,24 +55,24 @@ previousTurn game newGame =
     fst' = \(a, _, _) -> a
 
 i_max :: Pos
-i_max = grid_size - 1
+i_max = gridSize - 1
 
 getCols :: Grid -> [[Cell]]
 getCols g = [getCol pos g | pos <- [0 .. i_max]]
   where
-    getCol i g = [g !! (pos + i) | pos <- map (* grid_size) [0 .. i_max]]
+    getCol i g = [g !! (pos + i) | pos <- map (* gridSize) [0 .. i_max]]
 
 getRows :: Grid -> [[Cell]]
 getRows g = [getRow pos g | pos <- [0 .. i_max]]
   where
-    getRow i g = [g !! (i * grid_size + pos) | pos <- [0 .. i_max]]
+    getRow i g = [g !! (i * gridSize + pos) | pos <- [0 .. i_max]]
 
 getDiags :: Grid -> [[Cell]]
 getDiags g = getPrimaryDiag g : getSecondaryDiag g : []
   where
-    getPrimaryDiag g = [g !! ((* pos) . succ $ grid_size) | pos <- [0 .. i_max]]
+    getPrimaryDiag g = [g !! ((* pos) . succ $ gridSize) | pos <- [0 .. i_max]]
     getSecondaryDiag g =
-      [g !! (pos * grid_size + i_max - pos) | pos <- [0 .. i_max]]
+      [g !! (pos * gridSize + i_max - pos) | pos <- [0 .. i_max]]
 
 getLines :: Grid -> [[Cell]]
 getLines g = getCols g ++ getRows g ++ getDiags g
