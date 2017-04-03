@@ -53,6 +53,7 @@ extra-deps:
 - QuickCheck-2.9.2
 - extra-1.5.1
 - lens-4.15.1
+- Boolean-0.2.4
 
 # Override default flag values for local packages and extra-deps
 flags: {}

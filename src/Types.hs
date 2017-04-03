@@ -8,8 +8,7 @@ module Types
   , Grid
   ) where
 
-import Data.List (findIndex)
-import Data.Maybe (fromJust)
+import Data.Boolean
 import System.Random
 
 -- Types
@@ -30,6 +29,19 @@ instance Show Cell where
   show X = "X"
   show O = "O"
   show NULL = "_"
+
+instance Boolean Cell where
+  true = X
+  false = O
+  notB X = O
+  notB O = X
+  notB NULL = NULL
+  a &&* b
+    | a == b = a
+    | otherwise = NULL
+  _ ||* NULL = NULL
+  NULL ||* _ = NULL
+  a ||* b = a
 
 instance Random Cell where
   random g =

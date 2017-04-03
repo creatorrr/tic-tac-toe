@@ -8,6 +8,8 @@ module Predicates
   , validPos
   ) where
 
+import Data.Boolean
+
 -- Local imports
 import Constants
 import Types
@@ -24,32 +26,22 @@ checkFinished :: Grid -> Bool
 checkFinished = (/= INCOMPLETE) . getState computerCell
 
 checkWin :: Cell -> Grid -> Bool
-checkWin c game = or (map isComplete lines)
-  where
-    lines = getLines game
-    isComplete = and . (map (== c))
+checkWin c = any (all (== c)) . getLines
 
 getState :: Cell -> Grid -> State
 getState player game
-  | lost = LOST
-  | won = WON
-  | full = DRAW
+  | checkWin player game = WON
+  | checkWin (notB player) game = LOST
+  | checkFull game = DRAW
   | otherwise = INCOMPLETE
-  where
-    lost = checkWin (opponent player) game
-    won = checkWin player game
-    full = checkFull game
-    opponent X = O
-    opponent O = X
 
 validPos :: Int -> Bool
 validPos = between 1 gridSq
 
 getScore :: Depth -> Grid -> Maybe Score
-getScore depth game =
-  case checkFinished game of
-    True -> Just $ score - fudge
-    _ -> Nothing
+getScore depth game
+  | checkFinished game = Just $ score - fudge
+  | otherwise = Nothing
   where
     fudge = depth * signum score
     score = fromEnum . getState computerCell $ game

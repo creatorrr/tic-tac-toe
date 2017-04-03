@@ -10,4 +10,4 @@ import Utils
 
 -- Main
 main :: IO ()
-main = putStrLn . show . minimax $ play emptyGrid 1
+main = print . minimax $ play emptyGrid 1

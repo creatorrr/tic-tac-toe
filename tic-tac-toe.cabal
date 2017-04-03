@@ -21,6 +21,7 @@ executable tic-tac-toe
                      , QuickCheck
                      , extra
                      , lens
+                     , Boolean
 
 test-suite tic-tac-toe-test
   type:                exitcode-stdio-1.0
@@ -34,3 +35,4 @@ test-suite tic-tac-toe-test
                      , QuickCheck
                      , extra
                      , lens
+                     , Boolean
