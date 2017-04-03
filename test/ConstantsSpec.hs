@@ -8,10 +8,9 @@ import Types
 spec :: Spec
 spec = do
   describe "Cell" $ do
-    describe "playerCell" $ do it "should be X" $ do playerCell `shouldBe` X
-    describe "computerCell" $ do
-      it "should be O" $ do computerCell `shouldBe` O
+    describe "playerCell" $ it "should be X" $ playerCell `shouldBe` X
+    describe "computerCell" $ it "should be O" $ computerCell `shouldBe` O
   describe "Grid" $ do
-    describe "size" $ do it "should be 9" $ do gridSq `shouldBe` 9
-    describe "emptyGrid" $ do
-      it "should be empty" $ do emptyGrid `shouldSatisfy` (and . map (== NULL))
+    describe "size" $ it "should be 9" $ gridSq `shouldBe` 9
+    describe "emptyGrid" $
+      it "should be empty" $ emptyGrid `shouldSatisfy` all (== NULL)

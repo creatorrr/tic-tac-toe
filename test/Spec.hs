@@ -5,8 +5,6 @@ module Main
 import Prelude
 import Test.Hspec
 
-import Examples
-
 import qualified AISpec as AI
 import qualified ConstantsSpec as Constants
 import qualified PredicatesSpec as Predicates
