@@ -3,13 +3,14 @@ module Utils
   , pick
   , intersperse
   , decc
-  , printGrid
+  , showGrid
   , getLines
   , getRows
   , getCols
   , getDiags
   , posLeft
   , nextTurn
+  , putStrLn_
   ) where
 
 import Control.Monad
@@ -27,10 +28,10 @@ intersperse _ [] = []
 intersperse _ [a] = [a]
 intersperse c (a:b:rest) = a : c : intersperse c (b : rest)
 
-printGrid :: Grid -> String
-printGrid [] = ""
-printGrid (c1:c2:c3:rest) =
-  (++ "\n" ++ printGrid rest) . join . intersperse "_|_" . map show $
+showGrid :: Grid -> String
+showGrid [] = ""
+showGrid (c1:c2:c3:rest) =
+  (++ "\n" ++ showGrid rest) . join . intersperse "_|_" . map show $
   [c1, c2, c3]
 
 between :: Int -> Int -> (Int -> Bool)
@@ -71,3 +72,8 @@ getDiags g = [getPrimaryDiag g, getSecondaryDiag g]
 
 getLines :: Grid -> [[Cell]]
 getLines g = join $ ($ g) <$> [getCols, getRows, getDiags]
+
+putStrLn_ :: a -> String -> IO a
+putStrLn_ v s = do
+  putStrLn s
+  return v

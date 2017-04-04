@@ -1,6 +1,12 @@
 module Game
   ( startGame
+  , makePlayerMove
+  , makeAIMove
+  , printGame
   ) where
+
+import Control.Conditional (if')
+import Control.Monad (liftM2)
 
 -- Local imports
 import AI
@@ -11,11 +17,19 @@ import Utils
 
 -- Game functions
 startGame :: Grid -> IO ()
-startGame grid = do
-  putStrLn . printGrid $ grid
-  putStrLn $ "Select position from " ++ show (posLeft grid)
-  opt <- read <$> getLine
-  let newGrid = play grid opt
-  if checkFinished newGrid
-    then putStrLn . (++) "You " . show . getState playerCell $ newGrid
-    else startGame $ play <*> minimax $ newGrid
+startGame grid =
+  printPrompt <$> printGame grid >>= makePlayerMove >>= makeAIMove
+
+printGame :: Grid -> IO Grid
+printGame = putStrLn_ <*> showGrid
+
+printPrompt :: Grid -> IO Grid
+printPrompt = putStrLn_ <*> ((++) "Select position from " . show . posLeft)
+
+makePlayerMove :: IO Grid -> IO Grid
+makePlayerMove = liftM2 play <*> pure (read <$> getLine)
+
+makeAIMove :: Grid -> IO ()
+makeAIMove =
+  if' <$> checkFinished <*> putStrLn . (++) "You " . show . getState playerCell <*>
+  startGame . (play <*> minimax)
