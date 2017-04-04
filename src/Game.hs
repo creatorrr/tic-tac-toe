@@ -1,15 +1,21 @@
 module Game
-  ( play
+  ( startGame
   ) where
 
 -- Local imports
+import AI
+import Constants
+import Predicates
 import Types
 import Utils
 
 -- Game functions
-play :: Grid -> Pos -> Grid
-play game pos
-  | exists pos = error "Invalid move"
-  | otherwise = take (decc pos) game ++ [nextTurn game] ++ drop pos game
-  where
-    exists = (/= NULL) . (!!) game . decc
+startGame :: Grid -> IO ()
+startGame grid = do
+  putStrLn . printGrid $ grid
+  putStrLn $ "Select position from " ++ show (posLeft grid)
+  opt <- read <$> getLine
+  let newGrid = play grid opt
+  if checkFinished newGrid
+    then putStrLn . (++) "You " . show . getState playerCell $ newGrid
+    else startGame $ play <*> minimax $ newGrid

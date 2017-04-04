@@ -1,8 +1,5 @@
 module AI
-  ( genMoves
-  , next'
-  , max'
-  , min'
+  ( play
   , minimax
   ) where
 
@@ -11,10 +8,17 @@ import Data.Function (on)
 import Data.List (repeat, maximumBy, minimumBy)
 
 -- Local imports
-import Game
 import Predicates
 import Types
 import Utils
+
+-- Game play function
+play :: Grid -> Pos -> Grid
+play game pos
+  | exists pos = error "Invalid move"
+  | otherwise = take (decc pos) game ++ [nextTurn game] ++ drop pos game
+  where
+    exists = (/= NULL) . (!!) game . decc
 
 -- AI functions
 allFinished :: [Move] -> Bool

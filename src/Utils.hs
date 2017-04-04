@@ -24,7 +24,8 @@ pick (x:xs) l = (l !! x) : pick xs l
 
 intersperse :: a -> [a] -> [a]
 intersperse _ [] = []
-intersperse c (a:rest) = a : c : intersperse c rest
+intersperse _ [a] = [a]
+intersperse c (a:b:rest) = a : c : intersperse c (b : rest)
 
 printGrid :: Grid -> String
 printGrid [] = ""
